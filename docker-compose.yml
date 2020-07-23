@@ -1,0 +1,23 @@
+version: '2.1'
+services:
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypassword
+      - MYSQL_DATABASE=ktoreasydb
+      - MYSQL_USER=ktoreasyuser
+      - MYSQL_PASSWORD=ktoreasypassword
+    ports:
+      - "3308:3306"
+
+  backend:
+    image: ktoreasy:latest
+    mem_limit: 300m
+    depends_on:
+      - db
+    environment:
+      - ENVIRONMENT=dev
+    restart: always
+    ports:
+      - "3510:3500"
