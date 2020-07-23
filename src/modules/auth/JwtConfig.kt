@@ -3,12 +3,11 @@ package com.batcuevasoft.modules.auth
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.auth0.jwt.interfaces.DecodedJWT
 import com.batcuevasoft.model.CredentialsResponse
 import com.batcuevasoft.model.User
 import java.util.*
 
-object JwtConfig : TokenVerifier {
+object JwtConfig : TokenProvider {
 
     private const val secret = "PlaceYourSecretHere"
     private const val issuer = "PlaceYourIssuerHere"
@@ -28,7 +27,7 @@ object JwtConfig : TokenVerifier {
     /**
      * Produce token and refresh token for this combination of User and Account
      */
-    fun createTokens(user: User) = CredentialsResponse(
+    override fun createTokens(user: User) = CredentialsResponse(
         createToken(user, getTokenExpiration()),
         createToken(user, getTokenExpiration(refrehsValidityInMs))
     )
@@ -47,6 +46,7 @@ object JwtConfig : TokenVerifier {
     private fun getTokenExpiration(validity: Long = validityInMs) = Date(System.currentTimeMillis() + validity)
 }
 
-interface TokenVerifier {
+interface TokenProvider {
+    fun createTokens(user: User): CredentialsResponse
     fun verifyToken(token: String): Int?
 }

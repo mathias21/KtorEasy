@@ -14,7 +14,7 @@ apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group 'com.batcuevasoft'
-version '0.1'
+version '0.2'
 
 sourceSets {
     main.kotlin.srcDirs = main.java.srcDirs = ['src']

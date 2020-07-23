@@ -7,6 +7,7 @@ import com.batcuevasoft.model.User
 import com.batcuevasoft.modules.auth.authenticationModule
 import com.batcuevasoft.modules.registration.registrationModule
 import com.batcuevasoft.modules.user.userModule
+import com.batcuevasoft.statuspages.authStatusPages
 import com.batcuevasoft.statuspages.generalStatusPages
 import com.batcuevasoft.statuspages.userStatusPages
 import io.ktor.application.Application
@@ -48,6 +49,7 @@ fun Application.module() {
     install(StatusPages) {
         generalStatusPages()
         userStatusPages()
+        authStatusPages()
         exception<UnknownError> {
             call.respondText(
                 "Internal server error",

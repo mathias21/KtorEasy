@@ -20,16 +20,15 @@ fun Authentication.Configuration.authenticationModule(
      * The [User] can then be accessed in each [ApplicationCall].
      */
     jwt("jwt") {
-
         verifier(tokenVerifier)
         realm = "ktor.io"
         validate {
             it.payload.getClaim("id").asInt()?.let { userId ->
                 // do database query to find Principal subclass
-                MyUser(userId)
+                databaseProvider.dbQuery {
+                    userApi.getUserById(userId)
+                }
             }
         }
     }
 }
-
-data class MyUser(val id: Int) : Principal

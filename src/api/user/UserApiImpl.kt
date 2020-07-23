@@ -4,14 +4,14 @@ import com.batcuevasoft.database.dao.Users
 import com.batcuevasoft.model.PostUserBody
 import com.batcuevasoft.model.PutUserBody
 import com.batcuevasoft.model.User
-import com.batcuevasoft.util.PasswordEncryption
+import com.batcuevasoft.util.PasswordManagerContract
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 object UserApiImpl : UserApi, KoinComponent {
 
     private val usersDao by inject<Users>()
-    private val passwordEncryption by inject<PasswordEncryption>()
+    private val passwordEncryption by inject<PasswordManagerContract>()
 
     override fun getUserById(id: Int): User? {
         return usersDao.getUserById(id)

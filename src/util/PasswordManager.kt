@@ -4,7 +4,7 @@ import org.mindrot.jbcrypt.BCrypt
 import java.security.SecureRandom
 
 
-object PasswordManager : PasswordManagerContract, PasswordEncryption {
+object PasswordManager : PasswordManagerContract {
 
     private const val letters: String = "abcdefghijklmnopqrstuvwxyz"
     private const val uppercaseLetters: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -70,11 +70,6 @@ object PasswordManager : PasswordManagerContract, PasswordEncryption {
         return BCrypt.hashpw(password, BCrypt.gensalt())
     }
 
-}
-
-interface PasswordEncryption {
-    fun validatePassword(attempt: String, userPassword: String): Boolean
-    fun encryptPassword(password: String): String
 }
 
 interface PasswordManagerContract {

@@ -8,8 +8,8 @@ class Config(
 ) {
 
     companion object {
-        val databaseName: String = "ktoreasydb"
-        val databaseUser: String = "ktoreasyuser"
-        val databasePassword: String = "ktoreasypassword"
+        const val DATABASENAME: String = "ktoreasydb"
+        const val DATABASEUSER: String = "ktoreasyuser"
+        const val DATABASEPASSWORD: String = "ktoreasypassword"
     }
 }

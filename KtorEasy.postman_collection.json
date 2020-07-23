@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "4086ce8a-6351-4f79-88ef-18110dca4fed",
+		"name": "KtorEasy",
+		"description": "This collection is made to test KtorEasy implementation endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registration",
+			"item": [
+				{
+					"name": "user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"name1\",\n    \"secondname\": \"secondname1\",\n    \"username\": \"username1\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3510/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3510",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authenticate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"username1\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3510/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3510",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"username1\",\n    \"refreshToken\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6IlBsYWNlWW91cklzc3VlckhlcmUiLCJuYW1lIjoibmFtZTEiLCJpZCI6MSwiZXhwIjoxNTk4MTA5NjU4fQ.5uSyXp7dgGA2YSAYgrVJI99_2pk-BdOWxcEkL1jNoklx3CZNP0lFiqApcc46Bk0cdPSx_0BKueW7WdNQA1Tfeg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3510/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3510",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "static",
+			"item": [
+				{
+					"name": "static/logo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3510/static/ktor_logo.svg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3510",
+							"path": [
+								"static",
+								"ktor_logo.svg"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "authenticated",
+			"item": [
+				{
+					"name": "me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6IlBsYWNlWW91cklzc3VlckhlcmUiLCJuYW1lIjoibmFtZTEiLCJpZCI6MSwiZXhwIjoxNTk1NjI1MzEwfQ.nqIHwIdeqaagG28l_Ny4Z6EjjlvVdm3TwZufNubs0pcAmzSGR2E57BYaL1064DsbOurw1IEOZnQQgr4TiTAfdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3510/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3510",
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6IlBsYWNlWW91cklzc3VlckhlcmUiLCJuYW1lIjoibmFtZTEiLCJpZCI6MSwiZXhwIjoxNTk1NjI1MzEwfQ.nqIHwIdeqaagG28l_Ny4Z6EjjlvVdm3TwZufNubs0pcAmzSGR2E57BYaL1064DsbOurw1IEOZnQQgr4TiTAfdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"newName\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3510/updateProfile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3510",
+							"path": [
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6IlBsYWNlWW91cklzc3VlckhlcmUiLCJuYW1lIjoibmFtZTEiLCJpZCI6MSwiZXhwIjoxNTk1NjI1MzEwfQ.nqIHwIdeqaagG28l_Ny4Z6EjjlvVdm3TwZufNubs0pcAmzSGR2E57BYaL1064DsbOurw1IEOZnQQgr4TiTAfdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3510/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3510",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

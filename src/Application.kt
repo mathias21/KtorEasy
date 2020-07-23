@@ -5,8 +5,12 @@ import com.batcuevasoft.api.injection.ApiInjection
 import com.batcuevasoft.config.Config
 import com.batcuevasoft.database.DatabaseProvider
 import com.batcuevasoft.database.DatabaseProviderContract
+import com.batcuevasoft.database.injection.DaoInjection
 import com.batcuevasoft.modules.auth.JwtConfig
+import com.batcuevasoft.modules.auth.TokenProvider
 import com.batcuevasoft.modules.injection.ModulesInjection
+import com.batcuevasoft.util.PasswordManager
+import com.batcuevasoft.util.PasswordManagerContract
 import com.typesafe.config.ConfigFactory
 import io.ktor.application.Application
 import io.ktor.application.install
@@ -28,12 +32,15 @@ fun main(args: Array<String>) {
             install(Koin) {
                 modules(
                     module {
+                        single { config }
                         single<DatabaseProviderContract> { DatabaseProvider() }
                         single<JWTVerifier> { JwtConfig.verifier }
-                        single { config }
+                        single<PasswordManagerContract> { PasswordManager }
+                        single<TokenProvider> { JwtConfig }
                     },
                     ApiInjection.koinBeans,
-                    ModulesInjection.koinBeans
+                    ModulesInjection.koinBeans,
+                    DaoInjection.koinBeans
                 )
             }
             main()

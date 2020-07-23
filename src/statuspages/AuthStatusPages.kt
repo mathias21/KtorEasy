@@ -4,7 +4,6 @@ import io.ktor.application.call
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.respond
 import io.ktor.response.respondText
 
 fun StatusPages.Configuration.authStatusPages() {

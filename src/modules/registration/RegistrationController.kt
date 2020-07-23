@@ -3,8 +3,7 @@ package com.batcuevasoft.modules.registration
 import com.batcuevasoft.api.user.UserApi
 import com.batcuevasoft.model.*
 import com.batcuevasoft.modules.BaseController
-import com.batcuevasoft.modules.auth.JwtConfig
-import com.batcuevasoft.modules.auth.TokenVerifier
+import com.batcuevasoft.modules.auth.TokenProvider
 import com.batcuevasoft.statuspages.AuthenticationException
 import com.batcuevasoft.statuspages.InvalidUserException
 import com.batcuevasoft.util.PasswordManagerContract
@@ -15,8 +14,7 @@ class RegistrationControllerImp : BaseController(), RegistrationController, Koin
 
     private val userApi by inject<UserApi>()
     private val passwordManager by inject<PasswordManagerContract>()
-    private val tokenVerifier by inject<TokenVerifier>()
-    private val jwtConfig by inject<JwtConfig>()
+    private val tokenProvider by inject<TokenProvider>()
 
     override suspend fun createUser(postUser: PostUserBody): ResponseUser {
         val user = dbQuery {
@@ -31,7 +29,7 @@ class RegistrationControllerImp : BaseController(), RegistrationController, Koin
     override suspend fun authenticate(credentials: LoginCredentials) = dbQuery {
         userApi.getUserByUsername(credentials.username)?.let { user ->
             if (passwordManager.validatePassword(credentials.password, user.password)) {
-                val credentialsResponse = jwtConfig.createTokens(user)
+                val credentialsResponse = tokenProvider.createTokens(user)
                 LoginTokenResponse(credentialsResponse)
             } else {
                 throw AuthenticationException("Wrong credentials")
@@ -40,9 +38,9 @@ class RegistrationControllerImp : BaseController(), RegistrationController, Koin
     }
 
     override suspend fun refreshToken(credentials: RefreshBody) = dbQuery {
-        tokenVerifier.verifyToken(credentials.refreshToken)?.let {
+        tokenProvider.verifyToken(credentials.refreshToken)?.let {
             userApi.getUserById(it)?.let {
-                val credentialsResponse = jwtConfig.createTokens(it)
+                val credentialsResponse = tokenProvider.createTokens(it)
                 LoginTokenResponse(credentialsResponse)
             } ?: throw AuthenticationException("Wrong credentials")
         } ?: throw AuthenticationException("Wrong credentials")
