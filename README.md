@@ -1,0 +1,2 @@
+# KtorEasy
+Suggested Ktor architecture
