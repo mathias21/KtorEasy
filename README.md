@@ -9,6 +9,8 @@ This is a suggested architecture that pretends to follow CLEAN principles. The m
 To achieve this, I'm using Koin as a dependency injection framework. 
 https://insert-koin.io/
 
+Also, to make each layer testable, Controllers and APIs should always implement an interface that will be injected where they are used, instead of the implemented type.
+
 ### Application.kt
 File to define Java app main method, Koin setup and configuration initialisation.
 
