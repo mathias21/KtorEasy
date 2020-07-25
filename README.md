@@ -3,6 +3,7 @@
 This is a project to demonstrate a suggested Ktor architecture. It includes Backend implementation with Ktor, MariaDB database connection with Hikari, Docker command to build Backend container and Docker compose to run both database and backend instance.
 
 ## Architecture explained
+![arch_image](https://github.com/mathias21/KtorEasy/blob/master/ktorArch.pnb?raw=true)
 This is a suggested architecture that pretends to follow CLEAN principles. The main idea behind it is to define each layer with one purpose and to allow unit testing each layer independently.
 
 To achieve this, I'm using Koin as a dependency injection framework. 
