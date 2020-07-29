@@ -1,5 +1,4 @@
 # KtorEasy
-**[Work in Progress] 🚧 🚧 This README FILE IS UNDER CONSTRUCTION** 🚧 🚧<br>
 This is a project to demonstrate a suggested Ktor architecture. It includes Backend implementation with Ktor, MariaDB database connection with Hikari, Docker command to build Backend container and Docker compose to run both database and backend instance.
 
 ## Architecture explained
@@ -8,6 +7,8 @@ This is a suggested architecture that pretends to follow CLEAN principles. The m
 
 To achieve this, I'm using Koin as a dependency injection framework. 
 https://insert-koin.io/
+
+Also, to make each layer testable, Controllers and APIs should always implement an interface that will be injected where they are used, instead of the implemented type.
 
 ### Application.kt
 File to define Java app main method, Koin setup and configuration initialisation.
