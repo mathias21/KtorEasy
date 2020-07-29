@@ -46,7 +46,6 @@ fun main(args: Array<String>) {
             main()
         }
     }.start(wait = true)
-
 }
 
 fun handleDefaultEnvironment(): String {

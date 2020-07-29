@@ -33,6 +33,13 @@ repositories {
     maven { url 'https://kotlin.bintray.com/ktor' }
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED'
+    }
+}
+
 shadowJar {
     manifest {
         attributes 'Main-Class': mainClassName
@@ -60,5 +67,10 @@ dependencies {
     // Koin for Kotlin
     implementation "org.koin:koin-ktor:$koin_version"
 
+    // Testing
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+    testImplementation "org.assertj:assertj-core:3.11.1"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.4.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.4.2"
+    testImplementation "io.mockk:mockk:1.9.3"
 }
