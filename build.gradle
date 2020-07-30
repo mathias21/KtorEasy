@@ -13,6 +13,8 @@ apply plugin: 'kotlin'
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 
+sourceCompatibility = 1.8
+
 group 'com.batcuevasoft'
 version '0.2'
 
@@ -25,6 +27,13 @@ sourceSets {
 
 application {
     mainClassName = "com.batcuevasoft.ApplicationKt"
+}
+
+
+configure([compileKotlin, compileTestKotlin]) {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 repositories {
