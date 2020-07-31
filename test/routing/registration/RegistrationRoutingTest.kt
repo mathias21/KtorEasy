@@ -15,14 +15,12 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.routing.Routing
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
+import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Assert
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.*
 import org.koin.dsl.module
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -41,6 +39,11 @@ class RegistrationRoutingTest : BaseRoutingTest() {
                 registrationModule()
             }
         }
+    }
+
+    @BeforeEach
+    fun clearMocks() {
+        clearMocks(registrationController)
     }
 
     @Test

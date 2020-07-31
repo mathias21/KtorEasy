@@ -1,6 +1,5 @@
 package com.batcuevasoft.routing
 
-import com.batcuevasoft.model.ResponseUser
 import com.google.gson.Gson
 import io.ktor.application.Application
 import io.ktor.application.install
