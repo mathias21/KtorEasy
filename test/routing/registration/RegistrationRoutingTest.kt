@@ -19,7 +19,6 @@ import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Assert
 import org.junit.jupiter.api.*
 import org.koin.dsl.module
 
