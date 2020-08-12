@@ -1,16 +1,17 @@
 package com.batcuevasoft.api.user
 
-import com.batcuevasoft.database.dao.Users
+import com.batcuevasoft.database.dao.UserDao
 import com.batcuevasoft.model.PostUserBody
 import com.batcuevasoft.model.PutUserBody
 import com.batcuevasoft.model.User
+import com.batcuevasoft.statuspages.InvalidUserException
 import com.batcuevasoft.util.PasswordManagerContract
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 object UserApiImpl : UserApi, KoinComponent {
 
-    private val usersDao by inject<Users>()
+    private val usersDao by inject<UserDao>()
     private val passwordEncryption by inject<PasswordManagerContract>()
 
     override fun getUserById(id: Int): User? {
@@ -19,10 +20,10 @@ object UserApiImpl : UserApi, KoinComponent {
 
     override fun createUser(postUser: PostUserBody): User? {
         val encryptedUser = postUser.copy(password = passwordEncryption.encryptPassword(postUser.password))
-        val key: Int? = (usersDao.insertUser(encryptedUser))[usersDao.id]
+        val key: Int? = usersDao.insertUser(encryptedUser)
         return key?.let {
             usersDao.getUserById(it)
-        }
+        } ?: throw InvalidUserException("Error while creating user")
     }
 
     override fun removeUser(userId: Int): Boolean {

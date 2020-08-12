@@ -7,8 +7,8 @@ import io.ktor.response.respond
 
 fun StatusPages.Configuration.generalStatusPages() {
     exception<MissingArgumentException> { cause ->
-        call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
+        call.respond(HttpStatusCode.BadRequest, cause.message)
     }
 }
 
-data class MissingArgumentException(override val message: String? = null) : Exception()
+data class MissingArgumentException(override val message: String = "Missing argument") : Exception()

@@ -4,9 +4,8 @@ import com.batcuevasoft.model.PostUserBody
 import com.batcuevasoft.model.PutUserBody
 import com.batcuevasoft.model.User
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.statements.InsertStatement
 
-object Users : Table() {
+object Users : Table(), UserDao {
     val id = integer("id").primaryKey().autoIncrement()
     val username = varchar("username", 255)
     val name = varchar("name", 255)
@@ -14,7 +13,7 @@ object Users : Table() {
     val creationTime = long("creationTime")
     val password = varchar("password", 255)
 
-    fun getUserById(userId: Int): User? {
+    override fun getUserById(userId: Int): User? {
         return select {
             (id eq userId)
         }.mapNotNull {
@@ -22,17 +21,17 @@ object Users : Table() {
         }.singleOrNull()
     }
 
-    fun insertUser(postUser: PostUserBody): InsertStatement<Number> {
-        return insert {
+    override fun insertUser(postUser: PostUserBody): Int? {
+        return (insert {
             it[name] = postUser.name
             it[secondname] = postUser.secondname
             it[username] = postUser.username
             it[password] = postUser.password
             it[creationTime] = System.currentTimeMillis()
-        }
+        })[id]
     }
 
-    fun updateUser(userId: Int, putUser: PutUserBody): User? {
+    override fun updateUser(userId: Int, putUser: PutUserBody): User? {
         update({ id eq userId }) { user ->
             putUser.name?.let { user[name] = it }
             putUser.secondname?.let { user[secondname] = it }
@@ -41,11 +40,11 @@ object Users : Table() {
         return getUserById(userId)
     }
 
-    fun deleteUser(userId: Int): Boolean {
+    override fun deleteUser(userId: Int): Boolean {
         return deleteWhere { (id eq userId) } > 0
     }
 
-    fun getUserByName(usernameValue: String): User? {
+    override fun getUserByName(usernameValue: String): User? {
         return select {
             (username eq usernameValue)
         }.mapNotNull {
@@ -62,3 +61,11 @@ fun ResultRow.mapRowToUser() =
         username = this[Users.username],
         password = this[Users.password]
     )
+
+interface UserDao {
+    fun getUserById(userId: Int): User?
+    fun insertUser(postUser: PostUserBody): Int?
+    fun updateUser(userId: Int, putUser: PutUserBody): User?
+    fun deleteUser(userId: Int): Boolean
+    fun getUserByName(usernameValue: String): User?
+}

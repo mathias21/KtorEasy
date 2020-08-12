@@ -11,4 +11,4 @@ fun StatusPages.Configuration.userStatusPages() {
     }
 }
 
-data class InvalidUserException(override val message: String? = null) : Exception()
+data class InvalidUserException(override val message: String = "Invalid user") : Exception()

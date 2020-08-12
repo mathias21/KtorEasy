@@ -21,6 +21,7 @@ import io.ktor.util.KtorExperimentalAPI
 import org.koin.dsl.module
 import org.koin.ktor.ext.Koin
 
+@KtorExperimentalAPI
 fun main(args: Array<String>) {
 
     val environment = System.getenv()["ENVIRONMENT"] ?: handleDefaultEnvironment()
