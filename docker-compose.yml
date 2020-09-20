@@ -3,6 +3,9 @@ services:
   db:
     image: mariadb:latest
     restart: always
+    volumes:
+      - ./db/KtorEasyDBSnap:/var/lib/mysql
+      - ./db/dbConfig:/etc/mysql/conf.d
     environment:
       - MYSQL_ROOT_PASSWORD=mypassword
       - MYSQL_DATABASE=ktoreasydb
@@ -21,3 +24,20 @@ services:
     restart: always
     ports:
       - "3510:3500"
+
+  dbBackup:
+    image: fradelg/mysql-cron-backup
+    depends_on:
+      - db
+    restart: always
+    volumes:
+      - ./db/KtorEasyDBSnap:/backup
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASS=mypassword
+      - MYSQL_DB=ktoreasydb
+      - CRON_TIME=0 0 * * *
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - TIMEOUT=10s
+      - INIT_BACKUP=1
