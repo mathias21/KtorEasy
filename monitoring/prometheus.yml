@@ -1,0 +1,6 @@
+scrape_configs:
+  - job_name: 'KtorEasy'
+    metrics_path: /metrics
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['backend:3500']
