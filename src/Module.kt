@@ -97,6 +97,7 @@ fun Application.module() {
         authenticate("jwt") {
             userModule()
         }
+        // We add our metrics endpoint to route definition
         metrics()
     }
 }
