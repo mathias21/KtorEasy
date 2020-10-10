@@ -10,12 +10,17 @@ services:
       - MYSQL_PASSWORD=ktoreasypassword
     ports:
       - "3308:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD
+      timeout: 3s
+      retries: 5
 
   backend:
     build: .
     mem_limit: 300m
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - ENVIRONMENT=dev
     restart: always
