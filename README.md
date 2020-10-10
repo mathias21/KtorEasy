@@ -29,6 +29,6 @@ This layer will use DAOs to recover/write information from/in database. It will 
 DAOs objects will define tables and those operations to do with them. It will also map table rows into API expected objects. 
 
 ## How to run it
-This project it is prepared to be run in Docker via [docker-compose](https://docs.docker.com/compose/). With a simple commands you will have it deployed to Docker with a MariaDB container linked to the backend instance. Just run: `docker-compose up`.
+This project is prepared to be run in Docker via [docker-compose](https://docs.docker.com/compose/). With a simple command, you will deploy it to Docker with a MariaDB container linked to the backend instance. Just run: `docker-compose up`.
 
 MariaDB is accesible through port `3308` with root password `mypassword` by default. The backend is accesible through port `3510`. You can change this settings in the `docker-compose.yml` file.
