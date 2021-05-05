@@ -28,6 +28,9 @@ This layer will use DAOs to recover/write information from/in database. It will 
 ### DAOs
 DAOs objects will define tables and those operations to do with them. It will also map table rows into API expected objects. 
 
+## Kotlin London Meetup presentation
+I've presented this implementation in the Kotlin London Meetup group in Youtube. You can find the presentation here: https://www.youtube.com/watch?v=RXSwQHur6zM
+
 ## How to run it
 This project is prepared to be run in Docker via [docker-compose](https://docs.docker.com/compose/). With a simple command, you will deploy it to Docker with a MariaDB container linked to the backend instance. Just run: `docker-compose up`.
 
