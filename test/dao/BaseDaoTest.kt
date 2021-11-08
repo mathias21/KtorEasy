@@ -1,8 +1,10 @@
 package com.batcuevasoft.dao
 
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 
 abstract class BaseDaoTest {
@@ -12,14 +14,17 @@ abstract class BaseDaoTest {
         Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver", user = "root", password = "")
     }
 
-    @AfterEach
-    open fun tearDown() {
+    fun withTables(vararg tables: Table, test: Transaction.() -> Unit)
+    {
         transaction {
-            dropSchema()
+            SchemaUtils.create(*tables)
+            try {
+                test()
+                commit()
+            } finally {
+                SchemaUtils.drop(*tables)
+                commit()
+            }
         }
     }
-
-    abstract fun createSchema()
-
-    abstract fun dropSchema()
 }

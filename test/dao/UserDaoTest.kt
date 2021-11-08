@@ -4,8 +4,6 @@ import com.batcuevasoft.controllers.instrumentation.RegistrationControllerInstru
 import com.batcuevasoft.database.dao.Users
 import com.batcuevasoft.model.User
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -15,8 +13,7 @@ class UserDaoTest : BaseDaoTest() {
 
     @Test
     fun `when creating user with correct information and user not taken, database is storing user`() {
-        transaction {
-            createSchema()
+        withTables(Users) {
             val validPostUser = givenAValidPostUserBody()
             val userId = Users.insertUser(validPostUser)
             userId?.let {
@@ -32,13 +29,5 @@ class UserDaoTest : BaseDaoTest() {
                 )
             } ?: throw IllegalStateException("UserId cannot be null")
         }
-    }
-
-    override fun createSchema() {
-        SchemaUtils.create(Users)
-    }
-
-    override fun dropSchema() {
-        SchemaUtils.drop(Users)
     }
 }
