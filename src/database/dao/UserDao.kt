@@ -3,15 +3,21 @@ package com.batcuevasoft.database.dao
 import com.batcuevasoft.model.PostUserBody
 import com.batcuevasoft.model.PutUserBody
 import com.batcuevasoft.model.User
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.update
 
 object Users : Table(), UserDao {
-    val id = integer("id").primaryKey().autoIncrement()
+    val id = integer("id").autoIncrement()
     val username = varchar("username", 255)
     val name = varchar("name", 255)
     val secondname = varchar("secondname", 255)
     val creationTime = long("creationTime")
     val password = varchar("password", 255)
+    override val primaryKey = PrimaryKey(id)
 
     override fun getUserById(userId: Int): User? {
         return select {

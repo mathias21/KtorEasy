@@ -1,19 +1,25 @@
 package com.batcuevasoft.statuspages
 
-import io.ktor.application.call
-import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.respondText
+import io.ktor.server.plugins.statuspages.StatusPagesConfig
+import io.ktor.server.response.respondText
 
-fun StatusPages.Configuration.authStatusPages() {
-    exception<AuthenticationException> { cause ->
-        call.respondText(cause.message, ContentType.Text.Plain, status = HttpStatusCode.Unauthorized)
+fun StatusPagesConfig.authStatusPages() {
+    exception<AuthenticationException> { call, cause ->
+        call.respondText(
+            cause.message,
+            ContentType.Text.Plain,
+            status = HttpStatusCode.Unauthorized
+        )
     }
-    exception<AuthorizationException> { cause ->
+    exception<AuthorizationException> { call, cause ->
         call.respondText(cause.message, ContentType.Text.Plain, status = HttpStatusCode.Forbidden)
     }
 }
 
-data class AuthenticationException(override val message: String = "Authentication failed") : Exception()
-data class AuthorizationException(override val message: String = "You are not authorised to use this service") : Exception()
+data class AuthenticationException(override val message: String = "Authentication failed") :
+    Exception(message)
+
+data class AuthorizationException(override val message: String = "You are not authorised to use this service") :
+    Exception(message)

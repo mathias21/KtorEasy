@@ -10,27 +10,26 @@ import com.batcuevasoft.modules.user.userModule
 import com.batcuevasoft.statuspages.authStatusPages
 import com.batcuevasoft.statuspages.generalStatusPages
 import com.batcuevasoft.statuspages.userStatusPages
-import io.ktor.application.Application
-import io.ktor.application.ApplicationCall
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.auth.Authentication
-import io.ktor.auth.authenticate
-import io.ktor.auth.authentication
-import io.ktor.features.CallLogging
-import io.ktor.features.ContentNegotiation
-import io.ktor.features.StatusPages
-import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.Routing
-import io.ktor.routing.route
-import io.ktor.routing.routing
+import io.ktor.serialization.gson.gson
+import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.application.call
+import io.ktor.server.application.install
+import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.authentication
+import io.ktor.server.http.content.resources
+import io.ktor.server.http.content.static
+import io.ktor.server.plugins.callloging.CallLogging
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.Routing
 import io.ktor.util.pipeline.PipelineContext
+import kotlinx.coroutines.runBlocking
 import org.koin.ktor.ext.inject
 import org.slf4j.event.Level
 
@@ -50,14 +49,14 @@ fun Application.module() {
         generalStatusPages()
         userStatusPages()
         authStatusPages()
-        exception<UnknownError> {
+        exception<UnknownError> { call, _ ->
             call.respondText(
                 "Internal server error",
                 ContentType.Text.Plain,
                 status = HttpStatusCode.InternalServerError
             )
         }
-        exception<IllegalArgumentException> {
+        exception<IllegalArgumentException> { call, _ ->
             call.respond(HttpStatusCode.BadRequest)
         }
     }
@@ -79,6 +78,8 @@ fun Application.module() {
 
 val ApplicationCall.user get() = authentication.principal<User>()!!
 
-suspend fun PipelineContext<Unit, ApplicationCall>.sendOk() {
-    call.respond(HttpStatusCode.OK)
+fun PipelineContext<Unit, ApplicationCall>.sendOk() {
+    runBlocking {
+        call.respond(HttpStatusCode.OK)
+    }
 }

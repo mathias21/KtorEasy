@@ -12,17 +12,15 @@ import com.batcuevasoft.modules.injection.ModulesInjection
 import com.batcuevasoft.util.PasswordManager
 import com.batcuevasoft.util.PasswordManagerContract
 import com.typesafe.config.ConfigFactory
-import io.ktor.application.Application
-import io.ktor.application.install
-import io.ktor.config.HoconApplicationConfig
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.config.HoconApplicationConfig
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.util.KtorExperimentalAPI
 import org.koin.dsl.module
-import org.koin.ktor.ext.Koin
+import org.koin.ktor.plugin.Koin
 
-@KtorExperimentalAPI
-fun main(args: Array<String>) {
+fun main() {
 
     val environment = System.getenv()["ENVIRONMENT"] ?: handleDefaultEnvironment()
     val config = extractConfig(environment, HoconApplicationConfig(ConfigFactory.load()))
@@ -58,7 +56,6 @@ fun Application.main() {
     module()
 }
 
-@KtorExperimentalAPI
 fun extractConfig(environment: String, hoconConfig: HoconApplicationConfig): Config {
     val hoconEnvironment = hoconConfig.config("ktor.deployment.$environment")
     return Config(

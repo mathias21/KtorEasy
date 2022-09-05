@@ -1,14 +1,19 @@
 package com.batcuevasoft.modules.registration
 
 import com.batcuevasoft.api.user.UserApi
-import com.batcuevasoft.model.*
+import com.batcuevasoft.model.LoginCredentials
+import com.batcuevasoft.model.LoginTokenResponse
+import com.batcuevasoft.model.PostUserBody
+import com.batcuevasoft.model.RefreshBody
+import com.batcuevasoft.model.ResponseUser
+import com.batcuevasoft.model.toResponseUser
 import com.batcuevasoft.modules.BaseController
 import com.batcuevasoft.modules.auth.TokenProvider
 import com.batcuevasoft.statuspages.AuthenticationException
 import com.batcuevasoft.statuspages.InvalidUserException
 import com.batcuevasoft.util.PasswordManagerContract
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class RegistrationControllerImp : BaseController(), RegistrationController, KoinComponent {
 

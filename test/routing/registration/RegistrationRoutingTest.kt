@@ -4,39 +4,40 @@ import com.batcuevasoft.model.ResponseUser
 import com.batcuevasoft.modules.registration.RegistrationController
 import com.batcuevasoft.modules.registration.registrationModule
 import com.batcuevasoft.routing.BaseRoutingTest
+import com.batcuevasoft.routing.customClient
 import com.batcuevasoft.routing.instrumentation.RegistrationControllerInstrumentation.givenAResponseUser
 import com.batcuevasoft.routing.instrumentation.RegistrationControllerInstrumentation.givenPostUserBody
 import com.batcuevasoft.statuspages.InvalidUserException
-import io.ktor.application.install
+import io.ktor.client.call.body
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
-import io.ktor.routing.Routing
-import io.ktor.server.testing.handleRequest
-import io.ktor.server.testing.setBody
+import io.ktor.server.routing.Routing
+import io.ktor.server.testing.ApplicationTestBuilder
 import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RegistrationRoutingTest : BaseRoutingTest() {
 
     private val registrationController: RegistrationController = mockk()
 
-    @BeforeAll
-    fun setup() {
-        koinModules = module {
-            single { registrationController }
-        }
+    override val koinModules: Module = module {
+        single { registrationController }
+    }
 
-        moduleList = {
-            install(Routing) {
-                registrationModule()
-            }
+    override val moduleList: ApplicationTestBuilder.() -> Unit = {
+        install(Routing) {
+            registrationModule()
         }
     }
 
@@ -46,34 +47,32 @@ class RegistrationRoutingTest : BaseRoutingTest() {
     }
 
     @Test
-    fun `when creating user with succesful insertion, we return response user body`() = withBaseTestApplication {
-        val userId = 11
-        val responseUser = givenAResponseUser(userId)
-        coEvery { registrationController.createUser(any()) } returns responseUser
+    fun `when creating user with successful insertion, we return response user body`() =
+        withBaseTestApplication {
+            val userId = 11
+            val responseUser = givenAResponseUser(userId)
+            coEvery { registrationController.createUser(any()) } returns responseUser
 
-        val body = toJsonBody(givenPostUserBody())
-        val call = handleRequest(HttpMethod.Post, "/user") {
-            addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-            setBody(body)
-        }
-        with(call) {
-            assertThat(HttpStatusCode.OK).isEqualTo(response.status())
-            val responseBody = response.parseBody(ResponseUser::class.java)
+            val response = customClient.post("/user") {
+                header(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+                setBody(givenPostUserBody())
+            }
+            assertThat(HttpStatusCode.OK).isEqualTo(response.status)
+            val responseBody = response.body<ResponseUser>()
             assertThat(responseUser).isEqualTo(responseBody)
         }
-    }
 
     @Test
-    fun `when creating user already created, we return 400 error`() = withBaseTestApplication {
-        coEvery { registrationController.createUser(any()) } throws InvalidUserException("User is already taken")
+    fun `when creating user already created, we return 400 error`() =
+        withBaseTestApplication {
+            coEvery { registrationController.createUser(any()) } throws InvalidUserException("User is already taken")
 
-        val body = toJsonBody(givenPostUserBody())
-        val exception = assertThrows<InvalidUserException> {
-            handleRequest(HttpMethod.Post, "/user") {
-                addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-                setBody(body)
+            val exception = assertThrows<InvalidUserException> {
+                customClient.post("/user") {
+                    header(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+                    setBody(givenPostUserBody())
+                }
             }
+            assertThat(exception.message).isEqualTo("User is already taken")
         }
-        assertThat(exception.message).isEqualTo("User is already taken")
-    }
 }

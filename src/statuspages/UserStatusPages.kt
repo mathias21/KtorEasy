@@ -1,12 +1,11 @@
 package com.batcuevasoft.statuspages
 
-import io.ktor.application.call
-import io.ktor.features.StatusPages
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.respond
+import io.ktor.server.plugins.statuspages.StatusPagesConfig
+import io.ktor.server.response.respond
 
-fun StatusPages.Configuration.userStatusPages() {
-    exception<InvalidUserException> { cause ->
+fun StatusPagesConfig.userStatusPages() {
+    exception<InvalidUserException> { call, cause ->
         call.respond(HttpStatusCode.BadRequest, cause.localizedMessage)
     }
 }

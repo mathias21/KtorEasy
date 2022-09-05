@@ -22,7 +22,7 @@ class UserApiTest : BaseApiTest() {
     init {
         startInjection(
             module {
-                single(override = true) { userDao }
+                single { userDao }
             }
         )
     }

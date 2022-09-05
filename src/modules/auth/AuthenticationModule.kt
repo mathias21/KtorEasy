@@ -3,13 +3,12 @@ package com.batcuevasoft.modules.auth
 import com.auth0.jwt.interfaces.JWTVerifier
 import com.batcuevasoft.api.user.UserApi
 import com.batcuevasoft.database.DatabaseProviderContract
-import io.ktor.application.ApplicationCall
-import io.ktor.auth.Authentication
-import io.ktor.auth.Principal
-import io.ktor.auth.jwt.jwt
-import io.ktor.routing.Routing
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.auth.AuthenticationConfig
+import io.ktor.server.auth.jwt.jwt
+import io.ktor.server.routing.Routing
 
-fun Authentication.Configuration.authenticationModule(
+fun AuthenticationConfig.authenticationModule(
     userApi: UserApi,
     databaseProvider: DatabaseProviderContract,
     tokenVerifier: JWTVerifier
