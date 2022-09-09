@@ -1,4 +1,4 @@
-FROM openjdk:8 AS build
+FROM eclipse-temurin:11-jdk-alpine AS build
 
 RUN mkdir /appbuild
 COPY . /appbuild
@@ -7,7 +7,7 @@ WORKDIR /appbuild
 
 RUN ./gradlew clean build
 
-FROM openjdk:8-jre-alpine
+FROM eclipse-temurin:11-jre-alpine
 
 ENV APPLICATION_USER 1033
 RUN adduser -D -g '' $APPLICATION_USER
@@ -23,4 +23,4 @@ COPY --from=build /appbuild/build/libs/KtorEasy*all.jar /app/KtorEasy.jar
 COPY --from=build /appbuild/resources/ /app/resources/
 WORKDIR /app
 
-CMD ["sh", "-c", "java -server -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:InitialRAMFraction=2 -XX:MinRAMFraction=2 -XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -jar KtorEasy.jar"]
+CMD ["sh", "-c", "java -server -XX:+UnlockExperimentalVMOptions -XX:InitialRAMFraction=2 -XX:MinRAMFraction=2 -XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -jar KtorEasy.jar"]

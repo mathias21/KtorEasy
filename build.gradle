@@ -4,6 +4,8 @@ plugins {
     id "io.ktor.plugin" version "${ktor_version}"
 }
 
+sourceCompatibility = 11
+
 group 'com.batcuevasoft'
 version '0.2'
 
@@ -25,9 +27,6 @@ configure([compileKotlin, compileTestKotlin]) {
 }
 
 repositories {
-    mavenLocal()
-    jcenter()
-    maven { url 'https://kotlin.bintray.com/ktor' }
     mavenCentral()
 }
 
