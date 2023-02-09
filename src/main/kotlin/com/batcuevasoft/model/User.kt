@@ -1,5 +1,6 @@
 package com.batcuevasoft.model
-import io.ktor.auth.Principal
+
+import io.ktor.server.auth.*
 
 data class User(
     val id: Int,

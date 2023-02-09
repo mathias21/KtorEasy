@@ -6,8 +6,8 @@ import com.batcuevasoft.model.PutUserBody
 import com.batcuevasoft.model.User
 import com.batcuevasoft.statuspages.InvalidUserException
 import com.batcuevasoft.util.PasswordManagerContract
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 object UserApiImpl : UserApi, KoinComponent {
 

@@ -1,12 +1,11 @@
 package com.batcuevasoft.statuspages
 
-import io.ktor.application.call
-import io.ktor.features.StatusPages
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.respond
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
 
-fun StatusPages.Configuration.generalStatusPages() {
-    exception<MissingArgumentException> { cause ->
+fun StatusPagesConfig.generalStatusPages() {
+    exception<MissingArgumentException> { call, cause ->
         call.respond(HttpStatusCode.BadRequest, cause.message)
     }
 }

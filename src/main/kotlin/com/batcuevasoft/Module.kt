@@ -10,26 +10,17 @@ import com.batcuevasoft.modules.user.userModule
 import com.batcuevasoft.statuspages.authStatusPages
 import com.batcuevasoft.statuspages.generalStatusPages
 import com.batcuevasoft.statuspages.userStatusPages
-import io.ktor.application.Application
-import io.ktor.application.ApplicationCall
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.auth.Authentication
-import io.ktor.auth.authenticate
-import io.ktor.auth.authentication
-import io.ktor.features.CallLogging
-import io.ktor.features.ContentNegotiation
-import io.ktor.features.StatusPages
-import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.Routing
-import io.ktor.routing.route
-import io.ktor.routing.routing
+import io.ktor.serialization.gson.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.http.content.*
+import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import io.ktor.util.pipeline.PipelineContext
 import org.koin.ktor.ext.inject
 import org.slf4j.event.Level
@@ -50,14 +41,14 @@ fun Application.module() {
         generalStatusPages()
         userStatusPages()
         authStatusPages()
-        exception<UnknownError> {
+        exception<UnknownError> { call, _ ->
             call.respondText(
                 "Internal server error",
                 ContentType.Text.Plain,
                 status = HttpStatusCode.InternalServerError
             )
         }
-        exception<IllegalArgumentException> {
+        exception<IllegalArgumentException> { call, _ ->
             call.respond(HttpStatusCode.BadRequest)
         }
     }

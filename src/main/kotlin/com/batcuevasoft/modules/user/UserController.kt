@@ -5,17 +5,15 @@ import com.batcuevasoft.model.PutUserBody
 import com.batcuevasoft.model.User
 import com.batcuevasoft.modules.BaseController
 import com.batcuevasoft.statuspages.InvalidUserException
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class UserControllerImp : BaseController(), UserController, KoinComponent {
 
     private val userApi by inject<UserApi>()
 
     override suspend fun updateProfile(userId: Int, putUser: PutUserBody) = dbQuery {
-        userApi.updateUserProfile(userId, putUser)?.let {
-            it
-        } ?: throw InvalidUserException()
+        userApi.updateUserProfile(userId, putUser) ?: throw InvalidUserException()
     }
 
     override suspend fun removeUser(userId: Int) {

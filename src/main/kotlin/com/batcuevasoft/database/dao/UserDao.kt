@@ -6,7 +6,8 @@ import com.batcuevasoft.model.User
 import org.jetbrains.exposed.sql.*
 
 object Users : Table(), UserDao {
-    val id = integer("id").primaryKey().autoIncrement()
+    val id = integer("id").autoIncrement()
+    override val primaryKey = PrimaryKey(id)
     val username = varchar("username", 255)
     val name = varchar("name", 255)
     val secondname = varchar("secondname", 255)

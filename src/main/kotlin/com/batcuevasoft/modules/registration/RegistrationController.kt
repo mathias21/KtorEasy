@@ -7,8 +7,8 @@ import com.batcuevasoft.modules.auth.TokenProvider
 import com.batcuevasoft.statuspages.AuthenticationException
 import com.batcuevasoft.statuspages.InvalidUserException
 import com.batcuevasoft.util.PasswordManagerContract
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class RegistrationControllerImp : BaseController(), RegistrationController, KoinComponent {
 
