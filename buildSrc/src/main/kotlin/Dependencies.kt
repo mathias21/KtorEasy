@@ -14,6 +14,8 @@ object Dependencies {
         const val mysqlVersion = "5.1.46"
         const val bcryptVersion = "0.4"
 
+        const val micrometerPrometeusVersion = "1.10.3"
+
         const val assertJVersion = "3.11.1"
         const val junit = "5.4.2"
         const val mockK = "1.9.3"
@@ -24,13 +26,12 @@ object Dependencies {
 
     val ktorNetty = "io.ktor:ktor-server-netty:${Versions.ktorVersion}"
     val logback = "ch.qos.logback:logback-classic:${Versions.logbackVersion}"
-    val ktorServerNetty = "io.ktor:ktor-server-netty:${Versions.ktorVersion}"
     val ktorAuth = "io.ktor:ktor-server-auth:${Versions.ktorVersion}"
     val ktorLogging = "io.ktor:ktor-server-call-logging:${Versions.ktorVersion}"
     val ktorStatusPages = "io.ktor:ktor-server-status-pages:${Versions.ktorVersion}"
     val ktorContentNegotiation = "io.ktor:ktor-server-content-negotiation:${Versions.ktorVersion}"
     val ktorSerialization = "io.ktor:ktor-serialization-gson:${Versions.ktorVersion}"
-    val ktorMetrics = "io.ktor:ktor-server-metrics-micrometer:${Versions.ktorVersion}"
+    val ktorMetricsMicrometer = "io.ktor:ktor-server-metrics-micrometer:${Versions.ktorVersion}"
     val ktorJwt = "io.ktor:ktor-server-auth-jwt:${Versions.ktorVersion}"
 
     val exposedCore = "org.jetbrains.exposed:exposed-core:${Versions.exposedVersion}"
@@ -44,6 +45,9 @@ object Dependencies {
 
     // Koin for Kotlin
     val koin = "io.insert-koin:koin-ktor:${Versions.koinVersion}"
+
+    // Micrometer Prometeus
+    val micrometerPrometeus = "io.micrometer:micrometer-registry-prometheus:${Versions.micrometerPrometeusVersion}"
 
     // Testing
     val koinTest = "io.insert-koin:koin-test:${Versions.koinVersion}"

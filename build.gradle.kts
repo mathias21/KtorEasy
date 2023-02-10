@@ -46,7 +46,7 @@ dependencies {
     implementation(Dependencies.ktorSerialization)
     implementation(Dependencies.ktorLogging)
     implementation(Dependencies.ktorStatusPages)
-    implementation(Dependencies.ktorMetrics)
+    implementation(Dependencies.ktorMetricsMicrometer)
     implementation(Dependencies.logback)
     implementation(Dependencies.exposedCore)
     implementation(Dependencies.exposedDao)
@@ -56,6 +56,7 @@ dependencies {
     implementation(Dependencies.mysqlConnector)
 
     implementation(Dependencies.bcrypt)
+    implementation(Dependencies.micrometerPrometeus)
 
     // Koin for Kotlin
     implementation(Dependencies.koin)

@@ -20,6 +20,6 @@ RUN chmod -R 755 /app
 USER $APPLICATION_USER
 
 COPY --from=build /appbuild/build/libs/KtorEasy.jar /app/KtorEasy.jar
-COPY --from=build /appbuild/resources/ /app/resources/
+COPY --from=build /appbuild/src/main/resources/ /app/resources/
 WORKDIR /app
 ENTRYPOINT ["java","-jar","/app/KtorEasy.jar"]

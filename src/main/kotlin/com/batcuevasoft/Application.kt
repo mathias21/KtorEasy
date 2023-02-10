@@ -16,6 +16,8 @@ import io.ktor.server.application.*
 import io.ktor.server.config.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 
@@ -35,6 +37,7 @@ fun main(args: Array<String>) {
                         single<JWTVerifier> { JwtConfig.verifier }
                         single<PasswordManagerContract> { PasswordManager }
                         single<TokenProvider> { JwtConfig }
+                        single { PrometheusMeterRegistry(PrometheusConfig.DEFAULT) }
                     },
                     ApiInjection.koinBeans,
                     ModulesInjection.koinBeans,
