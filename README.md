@@ -35,3 +35,5 @@ I've presented this implementation in the Kotlin London Meetup group in Youtube.
 This project is prepared to be run in Docker via [docker-compose](https://docs.docker.com/compose/). With a simple command, you will deploy it to Docker with a MariaDB container linked to the backend instance. Just run: `docker-compose up`.
 
 MariaDB is accesible through port `3308` with root password `mypassword` by default. The backend is accesible through port `3510`. You can change this settings in the `docker-compose.yml` file.
+
+UPDATE: After bumping dependency versions, I've integrated monitoring with Grafana + Prometheus to the Docker compose file.
