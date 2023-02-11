@@ -26,3 +26,24 @@ services:
     restart: always
     ports:
       - "3510:3500"
+
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    ports:
+      - "3570:9090"
+    volumes:
+      - ./monitoring:/etc/prometheus/
+    links:
+      - backend
+
+  grafana:
+    image: grafana/grafana:5.1.0
+    ports:
+      - 3000:3000
+    user: "104"
+    volumes:
+      - ./monitoring/grafana:/var/lib/grafana
+    links:
+      - backend
+      - prometheus
