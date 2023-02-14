@@ -4,6 +4,7 @@ import com.batcuevasoft.model.PostUserBody
 import com.batcuevasoft.model.PutUserBody
 import com.batcuevasoft.model.User
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 object Users : Table(), UserDao {
     val id = integer("id").autoIncrement()
@@ -23,13 +24,13 @@ object Users : Table(), UserDao {
     }
 
     override fun insertUser(postUser: PostUserBody): Int? {
-        return (insert {
+        return insert {
             it[name] = postUser.name
             it[secondname] = postUser.secondname
             it[username] = postUser.username
             it[password] = postUser.password
             it[creationTime] = System.currentTimeMillis()
-        })[id]
+        }.getOrNull(id)
     }
 
     override fun updateUser(userId: Int, putUser: PutUserBody): User? {
