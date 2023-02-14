@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.koin.dsl.module
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserApiTest : BaseApiTest() {
 
@@ -22,7 +21,7 @@ class UserApiTest : BaseApiTest() {
     init {
         startInjection(
             module {
-                single(override = true) { userDao }
+                single { userDao }
             }
         )
     }

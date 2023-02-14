@@ -1,16 +1,15 @@
 package com.batcuevasoft.routing
 
 import com.google.gson.Gson
-import io.ktor.application.Application
-import io.ktor.application.install
-import io.ktor.features.ContentNegotiation
-import io.ktor.gson.gson
+import io.ktor.serialization.gson.*
+import io.ktor.server.application.*
+import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.TestApplicationResponse
 import io.ktor.server.testing.withTestApplication
 import org.koin.core.context.stopKoin
 import org.koin.core.module.Module
-import org.koin.ktor.ext.Koin
+import org.koin.ktor.plugin.Koin
 
 abstract class BaseRoutingTest {
 
