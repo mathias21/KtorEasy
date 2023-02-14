@@ -1,15 +1,11 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 group = AppConfig.group
 version = AppConfig.versionName
 
 plugins {
     kotlin("jvm") version Dependencies.Versions.kotlinPluginVersion
     id("io.ktor.plugin") version Dependencies.Versions.ktorPluginVersion
+    id("com.github.johnrengelman.shadow") version Dependencies.Versions.shadowJarVersion
 }
-
-apply(plugin = "com.github.johnrengelman.shadow")
 
 application {
     mainClass.set("com.batcuevasoft.ApplicationKt")
@@ -25,19 +21,8 @@ repositories {
     mavenCentral()
 }
 
-buildscript {
-    repositories {
-        maven { url = uri("https://plugins.gradle.org/m2/") }
-    }
-
-    dependencies {
-        classpath("com.github.jengelman.gradle.plugins:shadow:${Dependencies.Versions.shadowwarVersion}")
-    }
-}
-
 
 dependencies {
-
     implementation(kotlin("stdlib-jdk8"))
     implementation(Dependencies.ktorNetty)
     implementation(Dependencies.ktorAuth)
@@ -70,21 +55,20 @@ dependencies {
     testImplementation(Dependencies.mockK)
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
-}
-
-// config JVM target to 1.8 for kotlin compilation tasks
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
-}
-
 tasks {
-    "shadowJar"(ShadowJar::class) {
-        baseName = "KtorEasy"
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+    }
+
+    // config JVM target to 1.8 for kotlin compilation tasks
+    compileKotlin {
+        kotlinOptions.jvmTarget = "11"
+    }
+
+    shadowJar {
         version = "0.9"
     }
 }
