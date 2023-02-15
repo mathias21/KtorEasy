@@ -38,10 +38,10 @@ services:
       - backend
 
   grafana:
-    image: grafana/grafana:5.1.0
+    image: grafana/grafana-oss:8.2.6
     ports:
       - "3000:3000"
-    user: "104"
+    user: "472"
     volumes:
       - ./monitoring/grafana:/var/lib/grafana
     links:
