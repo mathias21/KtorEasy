@@ -1,0 +1,6 @@
+groups:
+  - name: UpAlert
+    rules:
+      - alert: InstanceDown
+        expr: up{job="services"} < 1
+        for: 1m
