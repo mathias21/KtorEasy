@@ -29,7 +29,7 @@ abstract class BaseControllerTest {
             modules(
                 module,
                 module {
-                    single(override = true) { databaseProvider }
+                    single { databaseProvider }
                 }
             )
         }

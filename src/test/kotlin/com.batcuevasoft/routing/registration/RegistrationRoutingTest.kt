@@ -7,12 +7,12 @@ import com.batcuevasoft.routing.BaseRoutingTest
 import com.batcuevasoft.routing.instrumentation.RegistrationControllerInstrumentation.givenAResponseUser
 import com.batcuevasoft.routing.instrumentation.RegistrationControllerInstrumentation.givenPostUserBody
 import com.batcuevasoft.statuspages.InvalidUserException
-import io.ktor.application.install
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
-import io.ktor.routing.Routing
+import io.ktor.server.application.*
+import io.ktor.server.routing.*
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import io.mockk.clearMocks

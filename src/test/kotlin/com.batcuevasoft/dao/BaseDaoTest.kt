@@ -14,8 +14,7 @@ abstract class BaseDaoTest {
         Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver", user = "root", password = "")
     }
 
-    fun withTables(vararg tables: Table, test: Transaction.() -> Unit)
-    {
+    fun withTables(vararg tables: Table, test: Transaction.() -> Unit) {
         transaction {
             SchemaUtils.create(*tables)
             try {

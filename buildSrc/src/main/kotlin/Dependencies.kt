@@ -1,29 +1,29 @@
 object Dependencies {
 
     object Versions {
-        const val kotlinPluginVersion = "1.7.22"
-        const val ktorPluginVersion = "2.2.1"
-        const val shadowwarVersion = "5.0.0"
+        const val kotlinPluginVersion = "1.8.0"
+        const val ktorPluginVersion = "2.2.3"
+        const val shadowJarVersion = "5.0.0"
 
-        const val ktorVersion = "2.1.1"
+        const val ktorVersion = "2.2.3"
         const val h2Version = "2.1.214"
-        const val koinVersion = "3.2.0"
-        const val exposedVersion = "0.39.2"
-        const val logbackVersion = "1.2.1"
-        const val hikariVersion = "3.2.0"
-        const val mysqlVersion = "5.1.46"
+        const val koinVersion = "3.3.3"
+        const val koinKtorVersion = "3.3.1"
+        const val exposedVersion = "0.41.1"
+        const val logbackVersion = "1.4.5"
+        const val hikariVersion = "5.0.1"
+        const val mysqlVersion = "8.0.32"
         const val bcryptVersion = "0.4"
 
         const val micrometerPrometeusVersion = "1.10.3"
 
-        const val assertJVersion = "3.11.1"
-        const val junit = "5.4.2"
-        const val mockK = "1.9.3"
+        const val assertJVersion = "3.24.2"
+        const val junit = "5.9.2"
+        const val mockK = "1.13.4"
     }
 
 
     // Dependencies
-
     val ktorNetty = "io.ktor:ktor-server-netty:${Versions.ktorVersion}"
     val logback = "ch.qos.logback:logback-classic:${Versions.logbackVersion}"
     val ktorAuth = "io.ktor:ktor-server-auth:${Versions.ktorVersion}"
@@ -39,12 +39,12 @@ object Dependencies {
     val exposedJdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposedVersion}"
     val hikari = "com.zaxxer:HikariCP:${Versions.hikariVersion}"
     val h2 = "com.h2database:h2:${Versions.h2Version}"
-    val mysqlConnector = "mysql:mysql-connector-java:${Versions.mysqlVersion}"
+    val mysqlConnector = "com.mysql:mysql-connector-j:${Versions.mysqlVersion}"
 
     val bcrypt = "org.mindrot:jbcrypt:${Versions.bcryptVersion}"
 
     // Koin for Kotlin
-    val koin = "io.insert-koin:koin-ktor:${Versions.koinVersion}"
+    val koin = "io.insert-koin:koin-ktor:${Versions.koinKtorVersion}"
 
     // Micrometer Prometeus
     val micrometerPrometeus = "io.micrometer:micrometer-registry-prometheus:${Versions.micrometerPrometeusVersion}"

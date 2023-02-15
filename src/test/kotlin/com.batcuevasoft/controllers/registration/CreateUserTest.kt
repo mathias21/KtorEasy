@@ -29,7 +29,7 @@ class CreateUserTest : BaseControllerTest() {
     init {
         startInjection(
             module {
-                single(override = true) { userApi }
+                single { userApi }
             }
         )
     }

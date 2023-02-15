@@ -2,18 +2,15 @@ package com.batcuevasoft.util
 
 import org.mindrot.jbcrypt.BCrypt
 import java.security.SecureRandom
+import kotlin.random.asKotlinRandom
 
 
 object PasswordManager : PasswordManagerContract {
 
-    private const val letters: String = "abcdefghijklmnopqrstuvwxyz"
-    private const val uppercaseLetters: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    private const val numbers: String = "0123456789"
-    private const val special: String = "@#=+!£$%&?"
-    private const val maxPasswordLength: Float = 20F //Max password lenght that my app creates
-    private const val maxPasswordFactor: Float = 10F //Max password factor based on chars inside password
-    //  see evaluatePassword function below
-
+    private val letters = 'a'..'z'
+    private val uppercaseLetters = 'A'..'Z'
+    private val numbers = '0'..'9'
+    private const val special: String = "@#=+!£\$%&?"
 
     override fun generatePasswordWithDefault() = generatePassword()
 
@@ -33,33 +30,23 @@ object PasswordManager : PasswordManagerContract {
         isWithSpecial: Boolean = true,
         length: Int = 6
     ): String {
-
-        var result = ""
-        var i = 0
+        var chars = ""
 
         if (isWithLetters) {
-            result += this.letters
+            chars += letters
         }
         if (isWithUppercase) {
-            result += this.uppercaseLetters
+            chars += uppercaseLetters
         }
         if (isWithNumbers) {
-            result += this.numbers
+            chars += numbers
         }
         if (isWithSpecial) {
-            result += this.special
+            chars += special
         }
 
-        val rnd = SecureRandom.getInstance("SHA1PRNG")
-        val sb = StringBuilder(length)
-
-        while (i < length) {
-            val randomInt: Int = rnd.nextInt(result.length)
-            sb.append(result[randomInt])
-            i++
-        }
-
-        return sb.toString()
+        val rnd = SecureRandom.getInstance("SHA1PRNG").asKotlinRandom()
+        return List(length) { chars.random(rnd) }.joinToString("")
     }
 
     override fun validatePassword(attempt: String, userPassword: String): Boolean {
